@@ -12,6 +12,7 @@ var BuildControls = props => {
 
   return (
     <div className={Classes.BuildControls}>
+      <p>The Price is : $<strong>{props.price.toFixed(2)}</strong></p>
       {controls.map(ctrl => {
         return (
           <BuildControl
@@ -19,9 +20,11 @@ var BuildControls = props => {
             Label={ctrl.label}
             added={() => props.ingredientAdded(ctrl.type)} //shaan understand
             removed={() => props.ingredientRemoved(ctrl.type)}
+            disabled={props.disabled[ctrl.type]}
           />
         );
-      })};
+      })}
+      <button className = {Classes.OrderButton} disabled={!props.purchase}>ORDER NOW</button>
     </div>
   );
 };

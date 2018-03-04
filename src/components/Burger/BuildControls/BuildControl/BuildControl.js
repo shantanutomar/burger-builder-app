@@ -5,7 +5,11 @@ var BuildControl = props => {
   return (
     <div className={Classes.BuildControl}>
       <div className={Classes.Label}> {props.Label} </div>
-      <button className={Classes.Less} onClick={props.removed}>
+      <button
+        className={Classes.Less}
+        onClick={props.removed}
+        disabled={props.disabled}
+      >
         Less
       </button>
       <button className={Classes.More} onClick={props.added}>
