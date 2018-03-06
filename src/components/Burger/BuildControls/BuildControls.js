@@ -12,7 +12,9 @@ var BuildControls = props => {
 
   return (
     <div className={Classes.BuildControls}>
-      <p>The Price is : $<strong>{props.price.toFixed(2)}</strong></p>
+      <p>
+        The Price is : $<strong>{props.price.toFixed(2)}</strong>
+      </p>
       {controls.map(ctrl => {
         return (
           <BuildControl
@@ -24,7 +26,13 @@ var BuildControls = props => {
           />
         );
       })}
-      <button className = {Classes.OrderButton} disabled={!props.purchase}>ORDER NOW</button>
+      <button
+        className={Classes.OrderButton}
+        disabled={!props.purchase}
+        onClick={props.purchasing}
+      >
+        ORDER NOW
+      </button>
     </div>
   );
 };

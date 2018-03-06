@@ -1,6 +1,7 @@
 import React from "react";
 import Aux from "../../hoc/Aux";
 import Classes from "./OrderSummary.css";
+import Button from "../UI/Button/Button";
 
 var OrderSummary = props => {
   var ingredientsSummary = Object.keys(props.ingredients).map(ele => {
@@ -18,6 +19,12 @@ var OrderSummary = props => {
       <p>The Delicious burger has below ingredients :</p>
       <ul>{ingredientsSummary}</ul>
       <p>Do you want to purchase ?</p>
+      <Button onClicked={props.purchaseCancel} btnType="Success">
+        CANCEL
+      </Button>
+      <Button onClicked={props.purchaseContinue} btnType="Danger">
+        CONTINUE
+      </Button>
     </Aux>
   );
 };
