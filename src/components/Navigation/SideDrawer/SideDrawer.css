@@ -2,7 +2,7 @@
   height: 100%;
   width: 280px;
   max-width: 70%;
-  background-color: lightgreen;
+  background-color: white;
   left: 0;
   top: 0;
   position: fixed;
@@ -18,4 +18,16 @@
   .SideDrawer {
     display: none;
   }
+}
+.Logo {
+  height: 11%;
+  margin-bottom: 50px;
+}
+
+.Open {
+  transform: translateX(0);
+}
+
+.Close {
+  transform: translateX(-100%);
 }
