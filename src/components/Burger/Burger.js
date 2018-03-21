@@ -13,17 +13,9 @@ var Burger = props => {
       return curr.concat(prev);
     }, []);
 
-  console.log(transformedIngredients);
-
   if (transformedIngredients.length === 0) {
     transformedIngredients = <p>Please start adding Ingredients!!</p>;
   }
-  /*    ingredients : {    
-        meat : 1,
-        cheese : 1,
-        salad : 2,
-        bacon : 2
-        }*/
 
   return (
     <div className={Classes.Burger}>
