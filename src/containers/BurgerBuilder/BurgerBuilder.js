@@ -76,47 +76,18 @@ class BurgerBuilder extends Component {
   };
 
   purchaseContinueHandler = () => {
-    //alert("You Continue !!");
-    this.setState({ loading: true });
-    let dateNow = new Date();
-    let date =
-      dateNow.getDate() +
-      "-" +
-      (dateNow.getMonth() + 1) +
-      "-" +
-      dateNow.getFullYear();
-    let time =
-      dateNow.getHours() +
-      ":" +
-      dateNow.getMinutes() +
-      ":" +
-      dateNow.getSeconds();
-    let dateTime = date + " " + time;
+    console.log(this.state.ingredients);
+    let checkedOutIng = [];
+    for (let i in this.state.ingredients) {
+      checkedOutIng.push(i + "=" + this.state.ingredients[i]);
+    }
+    checkedOutIng.push("totalPrice=" + this.state.totalPrice);
+    checkedOutIng = checkedOutIng.join("&");
 
-    let orders = {
-      orderDate: dateTime,
-      customer: {
-        name: "Shantanu Tomar",
-        address: {
-          street: "Rohini Sector 13",
-          pincode: "110085"
-        },
-        email: "check@gmail.com"
-      },
-      orderType: "fastest",
-      ingredients: this.state.ingredients,
-      price: this.state.totalPrice
-    };
-    axios
-      .post("/orders.json", orders)
-      .then(Response => {
-        this.setState({ loading: false, purchasingInd: false });
-        alert("Order has been added..!!");
-      })
-      .catch(error => {
-        this.setState({ loading: false, purchasingInd: false });
-        alert(error);
-      });
+    this.props.history.push({
+      pathname: "/checkout",
+      search: "?" + checkedOutIng
+    });
   };
 
   componentDidMount = () => {
