@@ -4,10 +4,8 @@ import Classes from "./NavigationItems.css";
 
 var NavigationItems = props => (
   <ul className={Classes.NavigationItems}>
-    <NavigationItem link="/" active>
-      BurgerBuilder
-    </NavigationItem>
-    <NavigationItem link="/">Checkout</NavigationItem>
+    <NavigationItem link="/">BurgerBuilder</NavigationItem>
+    <NavigationItem link="/orders">Orders</NavigationItem>
   </ul>
 );
 

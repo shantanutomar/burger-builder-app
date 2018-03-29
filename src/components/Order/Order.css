@@ -1,0 +1,43 @@
+.Order {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  width: 80%;
+  margin: 17px auto;
+  padding: 15px;
+  overflow: hidden;
+  border: none;
+  -webkit-border-radius: 6px;
+  border-radius: 6px;
+  font: normal 16px/1 "Times New Roman", Times, serif;
+  color: #703b09;
+  text-align: center;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  -webkit-box-shadow: 3px 4px 16px 0 #703b09;
+  box-shadow: 3px 4px 16px 0 #703b09;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.Order span {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  width: 120px;
+  margin: auto 5px;
+  padding: 10px;
+  overflow: hidden;
+  border: none;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  font: inherit;
+  color: wheat;
+  text-align: center;
+  text-transform: capitalize;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  background: rgba(152, 0, 0, 0.7);
+  -webkit-box-shadow: 1px 1px 1px 0 rgba(152, 0, 0, 1);
+  box-shadow: 1px 1px 1px 0 rgba(152, 0, 0, 1);
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+}
