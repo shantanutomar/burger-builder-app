@@ -29,6 +29,7 @@
   overflow: hidden;
   border: none;
   -webkit-border-radius: 3px;
+  display: inline-block;
   border-radius: 3px;
   font: inherit;
   color: wheat;
@@ -40,4 +41,28 @@
   -webkit-box-shadow: 1px 1px 1px 0 rgba(152, 0, 0, 1);
   box-shadow: 1px 1px 1px 0 rgba(152, 0, 0, 1);
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+@media screen and (min-width: 991px) {
+  /* start of large tablet styles */
+  .Order span {
+    width: 120px;
+    height: 300px;
+  }
+}
+
+@media screen and (min-width: 767px) {
+  /* start of medium tablet styles */
+  .Order span {
+    width: 120px;
+    height: 300px;
+  }
+}
+
+@media screen and (min-width: 479px) {
+  /* start of phone styles */
+  .Order span {
+    width: 80%;
+    height: auto;
+  }
 }

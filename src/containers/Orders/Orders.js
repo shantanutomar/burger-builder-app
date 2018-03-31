@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Order from "../../components/Order/Order";
 import axios from "../../AxiosOrders";
+import Spinner from "../../components/UI/Spinner/Spinner";
 
 class Orders extends Component {
   state = {
@@ -19,22 +20,25 @@ class Orders extends Component {
           fetchedOrders.push({ ...res.data[key], id: key });
         }
         this.setState({ orders: fetchedOrders });
-        // console.log(fetchedOrders);
       })
       .catch(err => {
         this.setState({ loading: false });
-        console.log(err);
+        alert(err);
       });
   };
 
   render() {
-    if (!this.state.loading) {
-      var order = this.state.orders.map(ele => {
+    if (this.state.loading) {
+      var order = <Spinner />;
+    } else {
+      order = this.state.orders.map(ele => {
         return (
           <Order
             key={ele.id}
             price={Number(ele.price)}
             ingredients={ele.ingredients}
+            orderedOn={ele.orderDate}
+            name={ele.customerData.name}
           />
         );
       });

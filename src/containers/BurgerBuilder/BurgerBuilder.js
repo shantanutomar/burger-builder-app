@@ -76,7 +76,6 @@ class BurgerBuilder extends Component {
   };
 
   purchaseContinueHandler = () => {
-    console.log(this.state.ingredients);
     let checkedOutIng = [];
     for (let i in this.state.ingredients) {
       checkedOutIng.push(i + "=" + this.state.ingredients[i]);
