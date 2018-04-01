@@ -31,17 +31,25 @@ class Orders extends Component {
     if (this.state.loading) {
       var order = <Spinner />;
     } else {
-      order = this.state.orders.map(ele => {
+      if (this.state.orders.length === 0) {
         return (
-          <Order
-            key={ele.id}
-            price={Number(ele.price)}
-            ingredients={ele.ingredients}
-            orderedOn={ele.orderDate}
-            name={ele.customerData.name}
-          />
+          <p style={{ textAlign: "center", fontWeight: "bold" }}>
+            OOPS.. No orders are present !! Please order a Burger.
+          </p>
         );
-      });
+      } else {
+        order = this.state.orders.map(ele => {
+          return (
+            <Order
+              key={ele.id}
+              price={Number(ele.price)}
+              ingredients={ele.ingredients}
+              orderedOn={ele.orderDate}
+              name={ele.customerData.name}
+            />
+          );
+        });
+      }
     }
 
     return <div>{order}</div>;
