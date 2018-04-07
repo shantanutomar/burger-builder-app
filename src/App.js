@@ -6,6 +6,7 @@ import { Route, Switch } from "react-router-dom";
 import Orders from "../src/containers/Orders/Orders";
 
 class App extends Component {
+  1;
   render() {
     return (
       <div>
