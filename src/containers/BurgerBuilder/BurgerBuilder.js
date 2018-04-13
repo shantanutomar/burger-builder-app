@@ -7,14 +7,14 @@ import Modal from "../../components/UI/Modal/Modal";
 // import axios from "../../AxiosOrders";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import { connect } from "react-redux";
-import * as actionTypes from "../../store/actions";
+// import * as actionTypes from "../../store/actions";
+import * as actionCreators from "../../store/actions/index";
 
 class BurgerBuilder extends Component {
   state = {
     purchasable: false,
     purchasingInd: false,
-    loading: false,
-    error: false
+    loading: false
   };
 
   updatePurchasableHandler = ingredients => {
@@ -44,20 +44,12 @@ class BurgerBuilder extends Component {
   };
 
   componentDidMount = () => {
-    // axios
-    //   .get("/ingredients.json")
-    //   .then(Response => {
-    //     this.setState({ ingredients: Response.data });
-    //     this.updatePurchasableHandler(this.state.ingredients);
-    //   })
-    //   .catch(error => {
-    //     this.setState({ error: true });
-    //     alert(error);
-    //   });
+    this.props.fetchIngredients();
+    this.props.onPurchaseInit();
   };
 
   render = () => {
-    if (!this.state.error) {
+    if (!this.props.error) {
       var burger = <Spinner />;
       if (this.props.ingredients) {
         var disabledInfo = { ...this.props.ingredients };
@@ -112,23 +104,20 @@ class BurgerBuilder extends Component {
 
 var mapStateToProps = state => {
   return {
-    ingredients: state.ingredients,
-    price: state.totalPrice
+    ingredients: state.burgerBuilderReducer.ingredients,
+    price: state.burgerBuilderReducer.totalPrice,
+    error: state.burgerBuilderReducer.error
   };
 };
 
 var mapDisptachToProps = dispatch => {
   return {
     onIngredientAdded: ingName =>
-      dispatch({
-        type: actionTypes.ADD_INGREDIENT,
-        payLoad: { ingName: ingName }
-      }),
+      dispatch(actionCreators.addIngredient(ingName)),
     onIngredientRemoved: ingName =>
-      dispatch({
-        type: actionTypes.REMOVE_INGREDIENT,
-        payLoad: { ingName: ingName }
-      })
+      dispatch(actionCreators.removeIngredient(ingName)),
+    fetchIngredients: () => dispatch(actionCreators.fetchIngredients()),
+    onPurchaseInit: () => dispatch(actionCreators.purchaseInit())
   };
 };
 

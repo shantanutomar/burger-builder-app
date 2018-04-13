@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import Button from "../../components/UI/Button/Button";
 import Classes from "./ContactData.css";
-import axios from "../../AxiosOrders";
+// import axios from "../../AxiosOrders";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import Input from "../../components/UI/Input/Input";
 import { connect } from "react-redux";
+import * as actionCreators from "../../store/actions/index";
 
 class ContactData extends Component {
   state = {
@@ -78,13 +79,20 @@ class ContactData extends Component {
         rules: {}
       }
     },
-    loading: false,
+    // loading: false,
     isFormValid: false
+  };
+
+  componentDidMount = () => {
+    if (this.props.orderSubmitted) {
+      this.props.history.push("/");
+    }
   };
 
   orderHandler = event => {
     event.preventDefault();
-    this.setState({ loading: true });
+    this.props.loadingPage();
+    // this.setState({ loading: true });
     let dateNow = new Date();
     let date =
       dateNow.getDate() +
@@ -111,17 +119,7 @@ class ContactData extends Component {
       price: this.props.price,
       orderDate: dateTime
     };
-    axios
-      .post("/orders.json", orders)
-      .then(Response => {
-        this.setState({ loading: false });
-        alert("Order has been added..!!");
-        this.props.history.push("/");
-      })
-      .catch(error => {
-        this.setState({ loading: false });
-        alert(error);
-      });
+    this.props.submitOrder(orders);
   };
 
   formDataValidateHandler = (rules, value) => {
@@ -177,7 +175,7 @@ class ContactData extends Component {
     });
 
     let form = null;
-    if (this.state.loading) {
+    if (this.props.loading) {
       form = <Spinner />;
     } else {
       form = (
@@ -200,9 +198,16 @@ class ContactData extends Component {
 
 var mapStateToProps = state => {
   return {
-    ingredients: state.ingredients,
-    price: state.totalPrice
+    ingredients: state.burgerBuilderReducer.ingredients,
+    price: state.burgerBuilderReducer.totalPrice,
+    loading: state.orderReducer.loading
   };
 };
 
-export default connect(mapStateToProps)(ContactData);
+var mapDispatchToProps = dispatch => {
+  return {
+    submitOrder: orders => dispatch(actionCreators.submitOrder(orders)),
+    loadingPage: () => dispatch(actionCreators.loadingPage())
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(ContactData);
