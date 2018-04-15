@@ -22,3 +22,17 @@
   height: 25px;
   margin: 15px auto;
 }
+
+@media (max-width: 479px) {
+  /* start of phone styles */
+  .Auth {
+    width: 90%;
+  }
+}
+
+@media (max-width: 800px) {
+  /* start of tablet styles */
+  .Auth {
+    width: 70%;
+  }
+}
