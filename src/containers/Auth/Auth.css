@@ -1,0 +1,24 @@
+.Auth {
+  width: 50%;
+  text-align: center;
+  margin: 20px auto;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  border: 2px solid #703b09;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  font: inherit;
+  color: rgba(0, 0, 0, 1);
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  -webkit-box-shadow: 4px 4px 6px 1px rgba(81, 32, 32, 0.55);
+  box-shadow: 4px 4px 6px 1px rgba(81, 32, 32, 0.55);
+}
+
+.Auth input {
+  display: block;
+  width: 80%;
+  height: 25px;
+  margin: 15px auto;
+}

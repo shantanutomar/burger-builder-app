@@ -10,3 +10,4 @@ export {
   fetchOrders,
   fetchOrdersLoading
 } from "./orders";
+export { auth } from "./auth";
