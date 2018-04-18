@@ -6,6 +6,7 @@ import * as actionCreators from "../../store/actions/auth";
 import { connect } from "react-redux";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import { Redirect } from "react-router-dom";
+import { formDataValidateHandler } from "../../shared/utility";
 
 class Auth extends Component {
   state = {
@@ -43,34 +44,16 @@ class Auth extends Component {
     isSignUp: false
   };
 
-  formDataValidateHandler = (rules, value) => {
-    let isValid = true;
-    if (rules.required) {
-      isValid = value.trim() !== "" && isValid;
-    }
-    if (rules.minLength > 0) {
-      isValid = value.trim().length > rules.minLength && isValid;
-    }
-    if (rules.isMail) {
-      //   let pattern =
-      //     "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-      //   isValid = pattern.test(value) && isValid;
-      isValid = true;
-    }
-    return isValid;
-  };
   inputChangeHandler = (event, formElementIdentifier) => {
     var updatedForm = { ...this.state.loginForm };
     var updatedFormElement = { ...updatedForm[formElementIdentifier] };
-    // console.log(event.target.value);
 
     updatedFormElement.value = event.target.value;
     updatedFormElement.isTouched = true;
-    updatedFormElement.valid = this.formDataValidateHandler(
+    updatedFormElement.valid = formDataValidateHandler(
       updatedFormElement.rules,
       updatedFormElement.value
     );
-    // console.log(updatedFormElement.valid);
 
     updatedForm[formElementIdentifier] = updatedFormElement;
     this.setState({ loginForm: updatedForm });

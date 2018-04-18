@@ -6,6 +6,7 @@ import Spinner from "../../components/UI/Spinner/Spinner";
 import Input from "../../components/UI/Input/Input";
 import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions/index";
+import { formDataValidateHandler } from "../../shared/utility";
 
 class ContactData extends Component {
   state = {
@@ -123,34 +124,21 @@ class ContactData extends Component {
     this.props.submitOrder(orders, this.props.idToken);
   };
 
-  formDataValidateHandler = (rules, value) => {
-    let isValid = true;
-    if (rules.required) {
-      isValid = value.trim() !== "" && isValid;
-    }
-    if (rules.maxLength > 0) {
-      isValid = value.trim().length <= rules.maxLength && isValid;
-    }
-    return isValid;
-  };
   inputChangeHandler = (event, formElementIdentifier) => {
     // updateObject utility can be used below as well.
     var updatedForm = { ...this.state.orderForm };
     var updatedFormElement = { ...updatedForm[formElementIdentifier] };
-    // console.log(event.target.value);
 
     updatedFormElement.value = event.target.value;
     updatedFormElement.isTouched = true;
-    updatedFormElement.valid = this.formDataValidateHandler(
+    updatedFormElement.valid = formDataValidateHandler(
       updatedFormElement.rules,
       updatedFormElement.value
     );
-    // console.log(updatedFormElement.valid);
 
     updatedForm[formElementIdentifier] = updatedFormElement;
     var isFormValid = true;
     for (let key in updatedForm) {
-      // console.log(updatedForm[key].valid);
       isFormValid = updatedForm[key].valid && isFormValid;
     }
     this.setState({ orderForm: updatedForm, isFormValid: isFormValid });
