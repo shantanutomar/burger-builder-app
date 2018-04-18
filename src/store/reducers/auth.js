@@ -6,6 +6,7 @@ var initState = {
   idToken: null,
   userId: null,
   error: null
+  // burgerBuilding: false
 };
 
 var authStart = (state, action) => {
@@ -31,8 +32,13 @@ var authLogout = (state, action) => {
   return updateObject(state, {
     idToken: null,
     userId: null
+    // burgerBuilding: false
   });
 };
+
+// var burgerBuilding = (state, action) => {
+//   return updateObject(state, { burgerBuilding: true });
+// };
 
 var reducer = (state = initState, action) => {
   switch (action.type) {
@@ -43,7 +49,9 @@ var reducer = (state = initState, action) => {
     case actionTypes.AUTH_FAILED:
       return authFailed(state, action);
     case actionTypes.AUTH_LOGOUT:
-      return authLogout();
+      return authLogout(state, action);
+    // case actionTypes.BURGER_BUILDING:
+    //   return burgerBuilding(state, action);
     default:
       return state;
   }

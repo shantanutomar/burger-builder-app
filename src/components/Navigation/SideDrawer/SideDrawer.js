@@ -17,12 +17,15 @@ var SideDrawer = props => {
         show={props.showSidedrawer}
         purchaseCancel={props.showSidedrawerHandler}
       />
-      <div className={attachedClass.join(" ")}>
+      <div
+        className={attachedClass.join(" ")}
+        onClick={props.showSidedrawerHandler}
+      >
         <div className={Classes.Logo}>
           <Logo />
         </div>
         <nav>
-          <NavigationItems />
+          <NavigationItems isAuthenticated={props.isAuthenticated} />
         </nav>
       </div>
     </Aux>

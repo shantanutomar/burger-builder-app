@@ -25,7 +25,11 @@ var authFailed = err => {
   };
 };
 
-var logout = () => {
+export var logout = () => {
+  localStorage.removeItem("idToken");
+  localStorage.removeItem("expirationDate");
+  localStorage.removeItem("localId");
+
   return {
     type: actionTypes.AUTH_LOGOUT
   };
@@ -38,6 +42,12 @@ var authSessionTimeout = sessionTimeoutInterval => {
     }, sessionTimeoutInterval * 1000);
   };
 };
+
+// export var burgerBuilding = () => {
+//   return {
+//     type: actionTypes.BURGER_BUILDING
+//   };
+// };
 
 export var auth = (email, password, authMode) => {
   return dispatch => {
@@ -59,6 +69,13 @@ export var auth = (email, password, authMode) => {
       .post(url, authData)
       .then(response => {
         console.log(response.data);
+        let expirationDate = new Date(
+          new Date().getTime() + response.data.expiresIn * 1000
+        );
+        localStorage.setItem("idToken", response.data.idToken);
+        localStorage.setItem("expirationDate", expirationDate);
+        localStorage.setItem("localId", response.data.localId);
+
         dispatch(authSuccess(response.data.idToken, response.data.localId));
         dispatch(authSessionTimeout(response.data.expiresIn));
       })
@@ -82,10 +99,35 @@ export var auth = (email, password, authMode) => {
           case "TOO_MANY_ATTEMPTS_TRY_LATER":
             alert(errorTypes.TOO_MANY_ATTEMPTS_TRY_LATER);
             break;
+          case "INVALID_EMAIL":
+            alert(errorTypes.INVALID_EMAIL);
+            break;
           default:
             alert(err.response.data.error.message);
         }
         dispatch(authFailed(err.response.data.error.message));
       });
+  };
+};
+
+export var autoLoginOnRefresh = () => {
+  return dispatch => {
+    let idToken = localStorage.getItem("idToken");
+    if (!idToken) {
+      dispatch(logout());
+    } else {
+      let expirationDate = new Date(localStorage.getItem("expirationDate"));
+      if (expirationDate <= new Date()) {
+        dispatch(logout());
+      } else {
+        let localId = localStorage.getItem("localId");
+        dispatch(authSuccess(idToken, localId));
+        dispatch(
+          authSessionTimeout(
+            (expirationDate.getTime() - new Date().getTime()) / 1000
+          )
+        );
+      }
+    }
   };
 };

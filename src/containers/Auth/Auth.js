@@ -5,6 +5,7 @@ import Classes from "./Auth.css";
 import * as actionCreators from "../../store/actions/auth";
 import { connect } from "react-redux";
 import Spinner from "../../components/UI/Spinner/Spinner";
+import { Redirect } from "react-router-dom";
 
 class Auth extends Component {
   state = {
@@ -120,8 +121,16 @@ class Auth extends Component {
     if (this.props.loading) {
       form = <Spinner />;
     }
+    let redirect = null;
+    if (this.props.isAuthenticated) {
+      this.props.burgerBuilding
+        ? (redirect = <Redirect to="/checkout" />)
+        : (redirect = <Redirect to="/" />);
+      // to checkout
+    }
     return (
       <div className={Classes.Auth}>
+        {redirect}
         {form}
         <Button onClicked={this.authModeChangeHandler} btnType="Danger">
           Switch to {this.state.isSignUp ? "SIGN IN" : "SIGN UP"}
@@ -133,7 +142,9 @@ class Auth extends Component {
 
 var mapStatetoProps = state => {
   return {
-    loading: state.authReducer.loading
+    loading: state.authReducer.loading,
+    isAuthenticated: state.authReducer.idToken !== null,
+    burgerBuilding: state.burgerBuilderReducer.burgerBuilding
   };
 };
 

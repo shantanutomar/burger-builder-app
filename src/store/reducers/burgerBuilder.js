@@ -11,7 +11,12 @@ const INGREDIENT_PRICE = {
 var initState = {
   ingredients: null,
   totalPrice: 1.5,
-  error: false
+  error: false,
+  burgerBuilding: false
+};
+
+var burgerBuilding = (state, action) => {
+  return updateObject(state, { burgerBuilding: true });
 };
 
 var addIngredient = (state, action) => {
@@ -47,7 +52,8 @@ var initIngredients = (state, action) => {
   let updateStateInit = {
     ingredients: action.payLoad.ingredients,
     error: false,
-    totalPrice: calcuatedPrice
+    totalPrice: calcuatedPrice,
+    burgerBuilding: false
   };
   return updateObject(state, updateStateInit);
 };
@@ -66,6 +72,8 @@ var reducer = (state = initState, action) => {
       return initIngredients(state, action);
     case actionTypes.INIT_INGREDIENTS_FAILED:
       return initIngredientsFailed(state, action);
+    case actionTypes.BURGER_BUILDING:
+      return burgerBuilding(state, action);
     default:
       return state;
   }

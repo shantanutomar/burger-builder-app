@@ -11,3 +11,4 @@ export const EMAIL_NOT_FOUND =
   "Email Not Found. Please Sign Up with this Email Address first.";
 export const INVALID_PASSWORD = "Password is incorrect. Please try again.";
 export const USER_DISABLED = "User has been disabled by Admin.";
+export const INVALID_EMAIL = "Please enter a valid Email Address.";

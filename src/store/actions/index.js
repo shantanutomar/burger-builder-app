@@ -1,7 +1,8 @@
 export {
   addIngredient,
   removeIngredient,
-  fetchIngredients
+  fetchIngredients,
+  burgerBuilding
 } from "./burgerBuider";
 export {
   submitOrder,
@@ -10,4 +11,4 @@ export {
   fetchOrders,
   fetchOrdersLoading
 } from "./orders";
-export { auth } from "./auth";
+export { auth, logout, autoLoginOnRefresh } from "./auth";

@@ -41,3 +41,9 @@ export var fetchIngredients = () => {
       });
   };
 };
+
+export var burgerBuilding = () => {
+  return {
+    type: actionTypes.BURGER_BUILDING
+  };
+};

@@ -112,14 +112,15 @@ class ContactData extends Component {
     for (let key in this.state.orderForm) {
       customerData[key] = this.state.orderForm[key].value;
     }
-
+    // let orderId = localStorage.getItem("localId");
     let orders = {
+      userId: this.props.userId,
       customerData: customerData,
       ingredients: this.props.ingredients,
       price: this.props.price,
       orderDate: dateTime
     };
-    this.props.submitOrder(orders);
+    this.props.submitOrder(orders, this.props.idToken);
   };
 
   formDataValidateHandler = (rules, value) => {
@@ -133,6 +134,7 @@ class ContactData extends Component {
     return isValid;
   };
   inputChangeHandler = (event, formElementIdentifier) => {
+    // updateObject utility can be used below as well.
     var updatedForm = { ...this.state.orderForm };
     var updatedFormElement = { ...updatedForm[formElementIdentifier] };
     // console.log(event.target.value);
@@ -200,13 +202,16 @@ var mapStateToProps = state => {
   return {
     ingredients: state.burgerBuilderReducer.ingredients,
     price: state.burgerBuilderReducer.totalPrice,
-    loading: state.orderReducer.loading
+    loading: state.orderReducer.loading,
+    idToken: state.authReducer.idToken,
+    userId: state.authReducer.userId
   };
 };
 
 var mapDispatchToProps = dispatch => {
   return {
-    submitOrder: orders => dispatch(actionCreators.submitOrder(orders)),
+    submitOrder: (orders, idToken) =>
+      dispatch(actionCreators.submitOrder(orders, idToken)),
     loadingPage: () => dispatch(actionCreators.loadingPage())
   };
 };

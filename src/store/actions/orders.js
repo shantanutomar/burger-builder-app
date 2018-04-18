@@ -23,10 +23,10 @@ export var loadingPage = () => {
   };
 };
 
-export var submitOrder = orders => {
+export var submitOrder = (orders, idToken) => {
   return dispatch => {
     axios
-      .post("/orders.json", orders)
+      .post("/orders.json?auth=" + idToken, orders)
       .then(Response => {
         dispatch(submitOrderStart(Response.data.name, orders));
         alert("Order has been added..!!");
@@ -59,12 +59,17 @@ var fetchOrderFailed = () => {
   };
 };
 
-export var fetchOrders = () => {
+export var fetchOrders = (idToken, userId) => {
   return dispatch => {
+    // orderBy is what firebase understands to fetch based on which index.
+    // Below has to be done in this manner only.
+    let queryParam =
+      "?auth=" + idToken + '&orderBy="userId"&equalTo="' + userId + '"';
     axios
-      .get("/orders.json")
+      .get("/orders.json" + queryParam)
       .then(res => {
         let fetchedOrders = [];
+        // let userId = localStorage.getItem("localId");
         for (var key in res.data) {
           fetchedOrders.push({ ...res.data[key], id: key });
         }
