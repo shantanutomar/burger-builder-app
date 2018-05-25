@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Order from "../../components/Order/Order";
-// import axios from "../../AxiosOrders";
 import Spinner from "../../components/UI/Spinner/Spinner";
 
 import { connect } from "react-redux";
@@ -31,6 +30,13 @@ class Orders extends Component {
               ingredients={ele.ingredients}
               orderedOn={ele.orderDate}
               name={ele.customerData.name}
+              onDeleteHandler={() =>
+                this.props.deleteOrder(
+                  ele.id,
+                  this.props.idToken,
+                  this.props.userId
+                )
+              }
             />
           );
         });
@@ -54,7 +60,9 @@ var mapDispatchToProps = dispatch => {
   return {
     onOrderFetch: (idToken, userId) =>
       dispatch(actionCreators.fetchOrders(idToken, userId)),
-    onOrdersLoading: () => dispatch(actionCreators.fetchOrdersLoading())
+    onOrdersLoading: () => dispatch(actionCreators.fetchOrdersLoading()),
+    deleteOrder: (Id, idToken, userId) =>
+      dispatch(actionCreators.deleteOrder(Id, idToken, userId))
   };
 };
 

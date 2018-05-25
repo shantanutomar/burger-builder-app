@@ -10,6 +10,7 @@ import burgerBuilderReducer from "../src/store/reducers/burgerBuilder";
 import orderReducer from "../src/store/reducers/orderReducer";
 import authReducer from "../src/store/reducers/auth";
 import thunk from "redux-thunk";
+
 // import StaticRouter from "react-router-dom/StaticRouter";
 
 // NODE_ENV is environment variable. We check this varaibale so that the Redux is only available

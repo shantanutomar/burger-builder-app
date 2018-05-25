@@ -1,6 +1,10 @@
+// /* global gapi */
+
 import * as actionTypes from "./actionTypes";
 import axios from "../../AxiosOrders";
 import * as errorTypes from "./errorTypes";
+// import firebase from "firebase";
+import { firbaseApp } from "../../firebaseAppConfig";
 
 var authStart = () => {
   return {
@@ -8,12 +12,13 @@ var authStart = () => {
   };
 };
 
-var authSuccess = (idToken, userId) => {
+var authSuccess = (idToken, userId, isGoogleSignedIn) => {
   return {
     type: actionTypes.AUTH_SUCCESS,
     payLoad: {
       idToken: idToken,
-      userId: userId
+      userId: userId,
+      isGoogleSignedIn: isGoogleSignedIn
     }
   };
 };
@@ -22,6 +27,27 @@ var authFailed = err => {
   return {
     type: actionTypes.AUTH_FAILED,
     payLoad: { error: err }
+  };
+};
+
+export var googleSignOut = () => {
+  firbaseApp
+    .auth()
+    .signOut()
+    .then(res => {
+      console.log("User logged out");
+    })
+    .catch(err => {
+      console.log(err);
+      alert("User was not logged out properly.");
+    });
+
+  localStorage.removeItem("idToken");
+  localStorage.removeItem("expirationDate");
+  localStorage.removeItem("localId");
+
+  return {
+    type: actionTypes.AUTH_LOGOUT
   };
 };
 
@@ -42,12 +68,6 @@ var authSessionTimeout = sessionTimeoutInterval => {
     }, sessionTimeoutInterval * 1000);
   };
 };
-
-// export var burgerBuilding = () => {
-//   return {
-//     type: actionTypes.BURGER_BUILDING
-//   };
-// };
 
 export var auth = (email, password, authMode) => {
   return dispatch => {
@@ -74,8 +94,15 @@ export var auth = (email, password, authMode) => {
         localStorage.setItem("idToken", response.data.idToken);
         localStorage.setItem("expirationDate", expirationDate);
         localStorage.setItem("localId", response.data.localId);
+        let isGoogleSignedIn = false;
 
-        dispatch(authSuccess(response.data.idToken, response.data.localId));
+        dispatch(
+          authSuccess(
+            response.data.idToken,
+            response.data.localId,
+            isGoogleSignedIn
+          )
+        );
         dispatch(authSessionTimeout(response.data.expiresIn));
       })
       .catch(err => {
@@ -128,5 +155,49 @@ export var autoLoginOnRefresh = () => {
         );
       }
     }
+  };
+};
+
+export var onAuthStateChange = () => {
+  return dispatch => {
+    firbaseApp.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        console.log("User is still logged in");
+        localStorage.setItem(
+          "idToken",
+          "jsXQsJrSQX3oksT8JiX3FfUNvxr7lf1tkaFItkqd"
+        );
+        localStorage.setItem("localId", user.uid);
+        let isGoogleSignedIn = true;
+
+        dispatch(
+          authSuccess(
+            "jsXQsJrSQX3oksT8JiX3FfUNvxr7lf1tkaFItkqd",
+            user.uid,
+            isGoogleSignedIn
+          )
+        );
+      } else {
+        console.log("User has been signed out");
+        dispatch(googleSignOut());
+      }
+    });
+  };
+};
+
+export var googleLoggedIn = user => {
+  return dispatch => {
+    localStorage.setItem("idToken", "jsXQsJrSQX3oksT8JiX3FfUNvxr7lf1tkaFItkqd");
+    localStorage.setItem("localId", user.user.uid);
+    let isGoogleSignedIn = true;
+    console.log("User logged In");
+
+    dispatch(
+      authSuccess(
+        "jsXQsJrSQX3oksT8JiX3FfUNvxr7lf1tkaFItkqd",
+        user.user.uid,
+        isGoogleSignedIn
+      )
+    );
   };
 };

@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import { Redirect } from "react-router-dom";
 import { formDataValidateHandler } from "../../shared/utility";
+import LoginButton from "./LoginButton";
 
 class Auth extends Component {
   state = {
@@ -68,6 +69,10 @@ class Auth extends Component {
     );
   };
 
+  // shaan
+  // init = () => {
+  //   gapi.load('auth2', function() { // Ready. });
+  // }
   authModeChangeHandler = () => {
     this.setState(prevState => {
       return { isSignUp: !prevState.isSignUp };
@@ -97,7 +102,9 @@ class Auth extends Component {
       <form onSubmit={this.onSubmitHanlder}>
         {input}
         <Button btnType="Success">
-          {this.state.isSignUp ? "SIGNUP" : "SIGNIN"}
+          {this.state.isSignUp
+            ? "SIGNUP USING EMAIL ID"
+            : "SIGNIN USING EMAIL ID"}
         </Button>
       </form>
     );
@@ -118,6 +125,7 @@ class Auth extends Component {
         <Button onClicked={this.authModeChangeHandler} btnType="Danger">
           Switch to {this.state.isSignUp ? "SIGN IN" : "SIGN UP"}
         </Button>
+        <LoginButton />
       </div>
     );
   }

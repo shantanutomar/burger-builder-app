@@ -1,5 +1,6 @@
 import React from "react";
 import Classes from "./Order.css";
+import Button from "../UI/Button/Button";
 
 var Order = props => {
   var ingredientsArray = [];
@@ -27,6 +28,9 @@ var Order = props => {
       {finalIngredients}
       <p>Price : USD {props.price.toFixed(2)}</p>
       <p>Ordered On : {props.orderedOn}</p>
+      <Button btnType="OrderDelete" onClicked={props.onDeleteHandler}>
+        DELETE ORDER
+      </Button>
     </div>
   );
 };

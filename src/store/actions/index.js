@@ -9,6 +9,14 @@ export {
   loadingPage,
   purchaseInit,
   fetchOrders,
-  fetchOrdersLoading
+  fetchOrdersLoading,
+  deleteOrder
 } from "./orders";
-export { auth, logout, autoLoginOnRefresh } from "./auth";
+export {
+  auth,
+  logout,
+  autoLoginOnRefresh,
+  googleLoggedIn,
+  googleSignOut,
+  onAuthStateChange
+} from "./auth";

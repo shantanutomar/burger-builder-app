@@ -22,6 +22,9 @@
 .Danger {
   color: #944317;
 }
+.OrderDelete {
+  color: red;
+}
 
 .Button:disabled {
   color: lightgrey;

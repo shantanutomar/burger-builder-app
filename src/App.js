@@ -26,6 +26,7 @@ var AsyncAuth = AsyncComponent(() => {
 class App extends Component {
   componentDidMount = () => {
     this.props.onAutoLogin();
+    this.props.onAuthStateChange();
   };
 
   render() {
@@ -64,7 +65,8 @@ var mapStateToProps = state => {
 
 var mapDispatchToProps = dispatch => {
   return {
-    onAutoLogin: () => dispatch(actionCreators.autoLoginOnRefresh())
+    onAutoLogin: () => dispatch(actionCreators.autoLoginOnRefresh()),
+    onAuthStateChange: () => dispatch(actionCreators.onAuthStateChange())
   };
 };
 

@@ -1,5 +1,6 @@
 import * as actionTypes from "./actionTypes";
 import axios from "../../AxiosOrders";
+// import firebase from "firebase";
 
 var submitOrderStart = (id, orders) => {
   return {
@@ -85,5 +86,23 @@ export var fetchOrders = (idToken, userId) => {
 export var fetchOrdersLoading = () => {
   return {
     type: actionTypes.FETCH_ORDERS_LOADING
+  };
+};
+
+// + ".json" + queryParam
+export var deleteOrder = (Id, idToken, userId) => {
+  return dispatch => {
+    // let queryParam =
+    //   "?auth=" + idToken + '&orderBy="userId"&equalTo="' + userId + '"';
+    axios
+      .delete(
+        "/orders/" + Id + ".json?auth=jsXQsJrSQX3oksT8JiX3FfUNvxr7lf1tkaFItkqd"
+      )
+      .then(res => {
+        dispatch(fetchOrders(idToken, userId));
+      })
+      .catch(err => {
+        alert(err);
+      });
   };
 };

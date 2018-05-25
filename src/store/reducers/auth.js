@@ -5,7 +5,8 @@ var initState = {
   loading: false,
   idToken: null,
   userId: null,
-  error: null
+  error: null,
+  isGoogleSignedIn: false
   // burgerBuilding: false
 };
 
@@ -18,7 +19,8 @@ var authSuccess = (state, action) => {
     loading: false,
     idToken: action.payLoad.idToken,
     userId: action.payLoad.userId,
-    error: null
+    error: null,
+    isGoogleSignedIn: action.payLoad.isGoogleSignedIn
   });
 };
 var authFailed = (state, action) => {
@@ -31,7 +33,8 @@ var authFailed = (state, action) => {
 var authLogout = (state, action) => {
   return updateObject(state, {
     idToken: null,
-    userId: null
+    userId: null,
+    isGoogleSignedIn: false
     // burgerBuilding: false
   });
 };

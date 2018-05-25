@@ -1,3 +1,5 @@
+// /* global gapi */
+
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import * as actionCreators from "../../store/actions/index";
@@ -5,17 +7,28 @@ import { connect } from "react-redux";
 
 class Logout extends Component {
   componentDidMount = () => {
-    this.props.onLogout();
+    if (this.props.isGoogleSignedIn) {
+      this.props.googleSignOut();
+    } else {
+      this.props.onLogout();
+    }
   };
   render() {
     return <Redirect to="/" />;
   }
 }
 
-var mapDispatchToProps = dispatch => {
+var mapStateToProps = state => {
   return {
-    onLogout: () => dispatch(actionCreators.logout())
+    isGoogleSignedIn: state.authReducer.isGoogleSignedIn
   };
 };
 
-export default connect(null, mapDispatchToProps)(Logout);
+var mapDispatchToProps = dispatch => {
+  return {
+    onLogout: () => dispatch(actionCreators.logout()),
+    googleSignOut: () => dispatch(actionCreators.googleSignOut())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Logout);
